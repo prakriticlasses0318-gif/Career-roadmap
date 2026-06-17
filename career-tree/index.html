@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Class 12 Science - Career Tree</title>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -15,16 +16,23 @@
         </header>
 
         <div class="controls">
-            <button class="toggle-btn active" data-stream="all">All Streams</button>
-            <button class="toggle-btn" data-stream="pcm">PCM Only</button>
-            <button class="toggle-btn" data-stream="pcmb">PCMB Only</button>
-            <button class="toggle-btn" data-stream="physics">Physics Specialization</button>
+            <div class="filter-controls">
+                <button class="toggle-btn active" data-filter="all">All Streams</button>
+                <button class="toggle-btn" data-filter="pcm">PCM Only</button>
+                <button class="toggle-btn" data-filter="pcmb">PCMB Only</button>
+                <button class="toggle-btn" data-filter="physics">Physics Specialization</button>
+            </div>
+            <div class="action-buttons">
+                <button id="exportBtn" class="export-btn">📥 Download Image</button>
+                <button id="printBtn" class="print-btn">🖨️ Print</button>
+            </div>
         </div>
 
         <div class="diagram-container">
             <div id="mermaidDiagram" class="mermaid">
                 <!-- Mermaid diagram will be loaded here -->
             </div>
+            <p class="export-hint">💡 Tip: Right-click on the diagram → "Save image as" to download directly</p>
         </div>
 
         <div class="info-panel">
@@ -33,7 +41,7 @@
                 <div class="info-section">
                     <h3>📚 Academic & Pure Science</h3>
                     <div class="path-details">
-                        <p><strong>Degrees:</strong> B.Sc. Honours, M.Sc./Ph.D.</p>
+                        <p><strong>Degrees:</strong> B.Sc. Honours, BS, Integrated BS-MS</p>
                         <p><strong>Institutions:</strong> IISc, IISERs, NISER, TIFR, Delhi University, CMI</p>
                         <p><strong>Exams:</strong> CUET-UG, JEST, GATE, JRF</p>
                         <p><strong>Careers:</strong> Research Scientist, University Professor, Laboratory Head</p>
@@ -43,7 +51,7 @@
                 <div class="info-section">
                     <h3>⚙️ Technical & Engineering</h3>
                     <div class="path-details">
-                        <p><strong>Degrees:</strong> B.Tech/B.E., M.Tech/Ph.D.</p>
+                        <p><strong>Degrees:</strong> B.Tech, B.E., M.Tech, Ph.D.</p>
                         <p><strong>Institutions:</strong> IITs, NITs, BITS Pilani, DTU</p>
                         <p><strong>Exams:</strong> JEE Advanced, JEE Main, BITSAT</p>
                         <p><strong>Careers:</strong> R&D Engineer, Aerospace Engineer, Robotics Engineer</p>
