@@ -1,0 +1,432 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #0f172a;
+    --secondary: #1e293b;
+    --accent: #38bdf8;
+    --accent-dark: #0369a1;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --purple: #a855f7;
+    --text: #f1f5f9;
+    --text-muted: #cbd5e1;
+    --border: #334155;
+}
+
+body {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+    color: var(--text);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.main-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Header */
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.8));
+    border: 2px solid var(--accent);
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+}
+
+.header h1 {
+    font-size: 2.5em;
+    background: linear-gradient(135deg, var(--accent), #06b6d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+}
+
+.subtitle {
+    color: var(--text-muted);
+    font-size: 1.1em;
+    letter-spacing: 1px;
+}
+
+/* Controls */
+.controls {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.toggle-btn {
+    padding: 10px 20px;
+    background: var(--secondary);
+    color: var(--text);
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1em;
+    font-weight: 500;
+}
+
+.toggle-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+}
+
+.toggle-btn.active {
+    background: linear-gradient(135deg, var(--accent), #06b6d4);
+    border-color: var(--accent);
+    color: var(--primary);
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
+}
+
+/* Diagram Container */
+.diagram-container {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.6), rgba(30, 41, 59, 0.6));
+    border: 2px solid var(--accent);
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 40px;
+    overflow-x: auto;
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.15);
+}
+
+.mermaid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 600px;
+}
+
+/* Info Panel */
+.info-panel {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.8));
+    border: 2px solid var(--accent);
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 40px;
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.15);
+}
+
+.info-panel h2 {
+    color: var(--accent);
+    margin-bottom: 25px;
+    font-size: 1.8em;
+    text-align: center;
+}
+
+.info-sections {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.info-section {
+    background: var(--secondary);
+    padding: 20px;
+    border-radius: 10px;
+    border-left: 4px solid var(--accent);
+    transition: all 0.3s ease;
+}
+
+.info-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 20px rgba(56, 189, 248, 0.2);
+}
+
+.info-section h3 {
+    color: var(--accent);
+    margin-bottom: 15px;
+    font-size: 1.1em;
+}
+
+.path-details p {
+    color: var(--text-muted);
+    margin: 8px 0;
+    font-size: 0.95em;
+    line-height: 1.6;
+}
+
+.path-details strong {
+    color: var(--text);
+}
+
+/* Entrance Exams */
+.entrance-exams {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.8));
+    border: 2px solid var(--success);
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 40px;
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
+}
+
+.entrance-exams h2 {
+    color: var(--success);
+    margin-bottom: 25px;
+    font-size: 1.8em;
+    text-align: center;
+}
+
+.exam-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 15px;
+}
+
+.exam-card {
+    background: var(--secondary);
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid var(--success);
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.exam-card:hover {
+    background: var(--success);
+    color: var(--primary);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+}
+
+.exam-card h4 {
+    font-size: 1.1em;
+    margin-bottom: 8px;
+    color: var(--success);
+}
+
+.exam-card:hover h4 {
+    color: var(--primary);
+}
+
+.exam-card p {
+    font-size: 0.85em;
+    color: var(--text-muted);
+}
+
+.exam-card:hover p {
+    color: var(--primary);
+}
+
+/* Institutions */
+.institutions {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.8));
+    border: 2px solid var(--purple);
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 40px;
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.15);
+}
+
+.institutions h2 {
+    color: var(--purple);
+    margin-bottom: 25px;
+    font-size: 1.8em;
+    text-align: center;
+}
+
+.institution-tabs {
+    display: grid;
+    gap: 20px;
+}
+
+.tab-content {
+    background: var(--secondary);
+    padding: 20px;
+    border-radius: 10px;
+    border-left: 4px solid var(--purple);
+}
+
+.tab-content h3 {
+    color: var(--purple);
+    margin-bottom: 15px;
+}
+
+.tab-content ul {
+    list-style: none;
+}
+
+.tab-content li {
+    padding: 8px 0;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+    transition: all 0.3s ease;
+}
+
+.tab-content li:last-child {
+    border-bottom: none;
+}
+
+.tab-content li:hover {
+    color: var(--accent);
+    padding-left: 10px;
+}
+
+.tab-content li::before {
+    content: "→ ";
+    color: var(--purple);
+    margin-right: 10px;
+}
+
+/* Career Paths */
+.career-paths {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.8));
+    border: 2px solid var(--warning);
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 40px;
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.15);
+}
+
+.career-paths h2 {
+    color: var(--warning);
+    margin-bottom: 25px;
+    font-size: 1.8em;
+    text-align: center;
+}
+
+.careers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+}
+
+.career-card {
+    background: var(--secondary);
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid var(--warning);
+    transition: all 0.3s ease;
+}
+
+.career-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 30px rgba(245, 158, 11, 0.3);
+    background: rgba(245, 158, 11, 0.1);
+}
+
+.career-card h4 {
+    color: var(--warning);
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.career-card .salary {
+    color: var(--success);
+    font-weight: bold;
+    margin: 8px 0;
+    font-size: 1em;
+}
+
+.career-card p {
+    color: var(--text-muted);
+    font-size: 0.9em;
+    line-height: 1.5;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 1.8em;
+    }
+
+    .subtitle {
+        font-size: 0.95em;
+    }
+
+    .exam-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    }
+
+    .careers-grid {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+
+    .info-sections {
+        grid-template-columns: 1fr;
+    }
+
+    .diagram-container {
+        padding: 15px;
+    }
+
+    .mermaid {
+        min-height: 400px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+
+    .header {
+        padding: 20px 10px;
+        margin-bottom: 20px;
+    }
+
+    .header h1 {
+        font-size: 1.4em;
+    }
+
+    .controls {
+        flex-direction: column;
+    }
+
+    .toggle-btn {
+        width: 100%;
+    }
+
+    .exam-grid,
+    .careers-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.main-container {
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--secondary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-dark);
+}
