@@ -5,7 +5,11 @@ mermaid.initialize({
     securityLevel: 'loose',
     flowchart: {
         useMaxWidth: true,
-        htmlLabels: true
+        htmlLabels: true,
+        curve: 'basis'
+    },
+    svg: { 
+        fontFamily: 'Arial' 
     }
 });
 
@@ -174,94 +178,100 @@ function loadDiagram(type = 'all') {
     mermaid.contentLoaded();
 }
 
+// Enhanced export to PNG using html2canvas
+async function exportAsImageHTML2Canvas() {
+    try {
+        // Check if html2canvas is loaded
+        if (typeof html2canvas === 'undefined') {
+            alert('Loading image library... Please wait a moment and try again.');
+            return;
+        }
+        
+        const element = document.getElementById('mermaidDiagram');
+        if (!element) {
+            alert('Diagram not found');
+            return;
+        }
+        
+        const canvas = await html2canvas(element, {
+            backgroundColor: '#0f172a',
+            scale: 2,
+            logging: false,
+            useCORS: true
+        });
+        
+        const link = document.createElement('a');
+        link.href = canvas.toDataURL('image/png');
+        link.download = `career-tree-${new Date().toISOString().split('T')[0]}.png`;
+        link.click();
+        
+        alert('✅ Image downloaded successfully!');
+    } catch (error) {
+        console.error('Export error:', error);
+        alert('Could not export image. Please try the right-click method below.');
+    }
+}
+
+// Right-click save SVG method
+function setupSVGExport() {
+    document.addEventListener('contextmenu', function(e) {
+        const svg = e.target.closest('svg');
+        if (svg) {
+            e.preventDefault();
+            const svgData = new XMLSerializer().serializeToString(svg);
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
+            
+            img.onload = function() {
+                canvas.width = img.width;
+                canvas.height = img.height;
+                ctx.fillStyle = '#0f172a';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(img, 0, 0);
+                const link = document.createElement('a');
+                link.href = canvas.toDataURL('image/png');
+                link.download = `career-tree-${new Date().toISOString().split('T')[0]}.png`;
+                link.click();
+            };
+            
+            img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+            return false;
+        }
+    });
+}
+
 // Event listeners for filter buttons
 document.querySelectorAll('.toggle-btn').forEach(btn => {
     btn.addEventListener('click', function() {
-        // Remove active class from all buttons
         document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
-        
-        // Add active class to clicked button
         this.classList.add('active');
-        
-        // Load corresponding diagram
         const streamType = this.dataset.filter;
         loadDiagram(streamType);
     });
 });
 
-// Initialize with 'all' diagram on page load
+// Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
     loadDiagram('all');
+    setupSVGExport();
     
-    // Smooth scroll for any anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({ behavior: 'smooth' });
-            }
-        });
-    });
-});
-
-// Export functionality
-function exportAsImage() {
-    const svg = document.querySelector('.mermaid svg');
-    if (!svg) {
-        alert('Please wait for the diagram to load first');
-        return;
-    }
-    
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    const svgString = new XMLSerializer().serializeToString(svg);
-    const img = new Image();
-    
-    img.onload = function() {
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx.drawImage(img, 0, 0);
-        const link = document.createElement('a');
-        link.href = canvas.toDataURL('image/png');
-        link.download = 'career-tree.png';
-        link.click();
+    // Load html2canvas library
+    const script = document.createElement('script');
+    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+    script.onload = function() {
+        console.log('✅ Image export library loaded');
     };
-    
-    img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgString)));
-}
-
-// Print functionality
-function printDiagram() {
-    window.print();
-}
-
-// Add keyboard shortcuts
-document.addEventListener('keydown', function(e) {
-    // Ctrl/Cmd + S for export
-    if ((e.ctrlKey || e.metaKey) && e.key === 's') {
-        e.preventDefault();
-        exportAsImage();
-    }
-    
-    // Ctrl/Cmd + P for print
-    if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
-        e.preventDefault();
-        printDiagram();
-    }
+    document.head.appendChild(script);
 });
 
-// Responsive handling
-window.addEventListener('resize', function() {
-    const container = document.querySelector('.diagram-container');
-    if (container.offsetWidth < 600) {
-        document.querySelector('.mermaid').style.fontSize = '0.8em';
-    } else {
-        document.querySelector('.mermaid').style.fontSize = '1em';
-    }
-});
+// Event listener for export button
+const exportBtn = document.getElementById('exportBtn');
+if (exportBtn) {
+    exportBtn.addEventListener('click', exportAsImageHTML2Canvas);
+}
 
-// Scroll to top button
+// Scroll to top
 const scrollTopBtn = document.createElement('button');
 scrollTopBtn.innerHTML = '↑ Top';
 scrollTopBtn.className = 'scroll-top-btn';
@@ -270,8 +280,8 @@ scrollTopBtn.style.cssText = `
     bottom: 30px;
     right: 30px;
     padding: 10px 15px;
-    background: var(--accent);
-    color: var(--primary);
+    background: #38bdf8;
+    color: #0f172a;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -284,18 +294,12 @@ scrollTopBtn.style.cssText = `
 document.body.appendChild(scrollTopBtn);
 
 window.addEventListener('scroll', function() {
-    if (window.pageYOffset > 300) {
-        scrollTopBtn.style.display = 'block';
-    } else {
-        scrollTopBtn.style.display = 'none';
-    }
+    scrollTopBtn.style.display = window.pageYOffset > 300 ? 'block' : 'none';
 });
 
 scrollTopBtn.addEventListener('click', function() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-// Console greeting
-console.log('%c🎓 Welcome to Class 12 Science Career Tree!', 'color: #38bdf8; font-size: 16px; font-weight: bold;');
-console.log('%cExplore different career paths after 12th Science', 'color: #10b981; font-size: 12px;');
-console.log('%cPress Ctrl+S to export diagram | Ctrl+P to print', 'color: #a855f7; font-size: 12px;');
+console.log('%c🎓 Career Tree Loaded!', 'color: #38bdf8; font-size: 16px; font-weight: bold;');
+console.log('%cExport Options: Click "Download Image" or Right-click diagram → Save image', 'color: #10b981; font-size: 12px;');
